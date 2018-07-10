@@ -12,11 +12,9 @@ def busca(request):
 		query = request.GET.get('q','')
 		if query:
 			qset= (
-				Q(nome__contains=query) |
-				Q(lider__contains=query)
+				Q(nome__contains=query) 
 			)
 			results = Alunos.objects.filter(qset).values()
-	#		results = Alunos.objects.filter(qset)
 		else:
 			results=[]
 		return render_to_response("../templates/busca.html",{
@@ -29,7 +27,6 @@ def busca(request):
 		telefone =  request.POST.get('telefone')
 		celula   =  request.POST.get('celula')
 		email   =  request.POST.get('email')
-		lider   =  request.POST.get('lider')
 		Alunos (nome=nome,telefone=telefone,celula=celula,email=email,lider=lider).save()
 		return render_to_response('../templates/user.html')
 

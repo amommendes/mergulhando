@@ -23,11 +23,11 @@ from mergulhando.alunos.views import busca
 from mergulhando.views import user
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin', admin.site.urls),
     url(r'^hora/$', hora_atual),
     url(r'^horas/plus/(\d{1,2})/', horas_mais),
     url(r'^home|', home),
-    url(r'^busca$', busca),
+    url(r'^busca', busca),
     url(r'^user$', user),
 
 ]
