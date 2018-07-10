@@ -1,0 +1,146 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mergulhando na Palavra</title>
+	<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+ 	<link rel="stylesheet" href="{% static 'css/fullcalendar/fullcalendar.min.css' %}"></link> 
+  <link rel="stylesheet" href="{% static 'css/fullcalendar/fullcalendar.material.css' %}"></link> 
+	<link href="{% static 'css/material-icons.css' %}" rel="stylesheet">
+  
+</head>
+<body >
+  <nav>
+    <div class="nav-wrapper white">
+      <a href="#" class="brand-logo">
+		    <img style="margin-left:5px;" height="60px;" src="{% static 'img/logo-preto.png' %}" alt="">
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down ">
+        <li ><a class="black-text text-black" onclick="showPnl('cursos')">Cursos</a></li>
+        <li><a class="black-text text-black" onclick="showPnl('calendar')">Agenda</a></li>
+        <li><a class="black-text text-black" onclick="showPnl('materiais')">Materiais</a></li>
+        <li><a class="black-text text-black" onclick="showPnl('busca')">Busca Aluno</a></li>
+         <li><a class="black-text text-black" href="/admin">Cadastro e Presença</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="row" id="pnl_calendar">
+    <div class="col s12">
+      <div id="calendar">
+      </div>
+    </div>
+  </div>
+  <div class="row" id="pnl_cursos">
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src="{% static 'img/pp.jpeg' %}" height="350px;">
+          <span class="card-title">Mergulhando na Palavra</span>
+        </div>
+        <div class="card-content">
+          <p>Temas essenciais à vida Cristã</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Detalhes</a>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src="{% static 'img/finance.jpg' %}" height="350px;">
+          <span class="card-title">Finanças</span>
+        </div>
+        <div class="card-content">
+          <p>Finanças aos olhos Bíblia</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Detalhes</a>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src="{% static 'img/time.jpg' %}" height="350px;">
+          <span class="card-title">Temas Diversos</span>
+        </div>
+        <div class="card-content">
+          <p>Temas atuais e relevantes para vida da igreja</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Detalhes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="pnl_materiais">
+    <div class="col s12">
+    </div>
+  </div>
+	<div class="row" id="pnl_busca">
+		<form class="col s12" method="GET" action="busca">
+	  		<div class="row">
+	  			<div class="input-field col s6">
+					<i class="material-icons prefix">account_circle</i>
+	          		<input id="first_name" type="text" name='q' value="{{ query|escape }}" class="validate">
+	          		<label for="first_name">Busca Aluno:</label>
+	        	</div>
+	        </div>
+	  </form>
+	  <div class="col s12">
+		    {% if query %}
+				<h2>Resultados para "{{ query|escape }}":</h2>
+					{% if results %}
+						<ul>
+						{% for aluno in results %}
+							<li>{{ aluno.nome }}</l1>
+						{% endfor %}
+						</ul>
+					{% else %}
+					<p>Não foram encontrados alunos</p>
+					{% endif %}
+			{% endif %}
+	  </div>
+	</div>
+</body>
+  <script type="text/javascript" src="{% static 'js/jquery2.1.1.js' %}"></script> 
+	<script type="text/javascript" src="{% static 'js/materialize.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/fullcalendar/moment.js' %}"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/pt-br.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/gcal.js"></script>
+  <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+   <script type="text/javascript">
+    $(document).ready(
+   		(function() {
+       showPnl('calendar')
+        $('select').material_select()
+        $('#calendar').fullCalendar({
+          googleCalendarApiKey: "AIzaSyAfIpIukmBsG-wGArNPvdiXdlKVbBS3l4M",
+          events: {
+            googleCalendarId: '68bs43it5625j0255scc64ns4c@group.calendar.google.com',
+          },
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaDay'
+          },
+          eventClick: function(event) {
+            console.log(event)
+              $("#calendar").fullCalendar("changeView", "agendaDay", event.start._i)
+              return false
+            },
+          locale: "pt-BR",
+          editable: false, // Don't allow editing of events
+          handleWindowResize: true,
+          minTime: '07:30:00', // Start time for the calendar
+          maxTime: '22:00:00', // End time for the calendar
+          displayEventTime: true, // Display event time
+        })
+      })()
+    )  
+
+  </script>
+</html>

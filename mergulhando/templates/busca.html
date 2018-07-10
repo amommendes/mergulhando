@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+	<link href="{% static 'css/material-icons.css' %}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<div class="row">
+		<form class="col s12" method="GET" action="busca">
+	  		<div class="row">
+	  			<div class="input-field col s6">
+					<i class="material-icons prefix">account_circle</i>
+	          		<input id="first_name" type="text" name='q' value="{{ query|escape }}" class="validate">
+	          		<label for="first_name">Busca Aluno:</label>
+	        	</div>
+	        </div>
+	    </form>
+	    <div class="col s12">
+		    {% if query %}
+				<h2>Resultados para "{{ query|escape }}":</h2>
+					{% if results %}
+						<ul>
+						{% for aluno in results %}
+							<li>{{ aluno.nome }}</l1>
+						{% endfor %}
+						</ul>
+					{% else %}
+					<p>Não foram encontrados alunos</p>
+					{% endif %}
+			{% endif %}
+	    </div>
+	    <div class="col s12">
+			<form action="./busca" method="POST">
+				{% csrf_token %}
+				{{ form }} 
+				<button class="btn waves-effect waves-light" type="submit" value="Submit"> Cadastrar
+					<i class="material-icons right">send</i>
+				</button>
+			</form>
+	    </div>
+	</div>
+</body>
+	<script type="text/javascript" src="{% static 'js/jquery2.1.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+    <script>
+	    $(document).ready(function() {
+    		$('select').material_select();
+  		});
+   	
+    </script>
+ 
+</html>
