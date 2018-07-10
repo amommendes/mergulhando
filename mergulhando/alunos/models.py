@@ -7,7 +7,7 @@ class Alunos(models.Model):
 	id_aluno    = models.AutoField(primary_key=True, unique=True)
 	nome        = models.CharField(max_length=100)
 	telefone    = models.CharField(max_length=15)
-	celula      = models.ForeignKey('Celula', on_delete=models.SET_DEFAULT)
+	celula      = models.ForeignKey('Celula', on_delete=models.SET_DEFAULT, default='BDN Tapuapé')
 	email       = models.EmailField()
 	observacoes = models.CharField(max_length=300)
 	def __str__ (self):
