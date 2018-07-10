@@ -7,7 +7,7 @@ class Alunos(models.Model):
 	id_aluno    = models.AutoField(primary_key=True, unique=True)
 	nome        = models.CharField(max_length=100)
 	telefone    = models.CharField(max_length=15)
-	celula      = models.ForeignKey('Celula', on_delete=models.SET_NULL)
+	celula      = models.ForeignKey('Celula', on_delete=models.SET_DEFAULT)
 	email       = models.EmailField()
 	observacoes = models.CharField(max_length=300)
 	def __str__ (self):
@@ -40,13 +40,13 @@ class Cursos(models.Model):
 
 class Modulo(models.Model):
 	id_modulo = models.AutoField(primary_key=True, unique=True)
-	curso     = models.ForeignKey('Cursos', on_delete=models.SET_NULL)
+	curso     = models.ForeignKey('Cursos', on_delete=models.SET_NULL,null=True)
 	nome      = models.CharField(max_length=100)
 	ativo     = models.BooleanField(default=True)
 
 class Turma(models.Model):
 	id_turma  = models.AutoField(primary_key=True, unique=True)
-	curso     = models.ForeignKey('Cursos',on_delete=models.SET_NULL)
+	curso     = models.ForeignKey('Cursos',on_delete=models.SET_NULL, null=True)
 	nome      = models.CharField(max_length=100)
 	data_ini  = models.DateField()
 	data_fim  = models.DateField()
@@ -54,7 +54,7 @@ class Turma(models.Model):
 class Presenca(models.Model):
 	id_modulo = models.AutoField(primary_key=True, unique=True)
 	aluno = models.ForeignKey('Alunos',on_delete=models.CASCADE)
-	modulo = models.ForeignKey('Modulo',on_delete=models.SET_NULL)
+	modulo = models.ForeignKey('Modulo',on_delete=models.SET_NULL, null=True)
 	data  = models.DateField()
 	def __str__(self):
 		return '%s, %s, %s' % (self.curso,self.aluno, self.data)		
