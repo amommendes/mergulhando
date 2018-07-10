@@ -1,8 +1,6 @@
 from django.db import models 
 from django.contrib import admin
 
-# Mudei.
-
 class Alunos(models.Model):
 	id_aluno    = models.AutoField(primary_key=True, unique=True)
 	nome        = models.CharField(max_length=100)
