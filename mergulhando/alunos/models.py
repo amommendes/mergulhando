@@ -4,9 +4,9 @@ from django.contrib import admin
 class Alunos(models.Model):
 	id_aluno    = models.AutoField(primary_key=True, unique=True)
 	nome        = models.CharField(max_length=100)
-	telefone    = models.CharField(max_length=15)
+	telefone    = models.CharField(max_length=15, null=True)
 	celula      = models.ForeignKey('Celula', on_delete=models.SET_DEFAULT,default='0')
-	email       = models.EmailField()
+	email       = models.EmailField(null=True)
 	observacoes = models.CharField(max_length=300, null=True)
 	def __str__ (self):
 		return 'Nome: %s' % (self.nome)
@@ -21,7 +21,7 @@ class Celula (models.Model):
 	id_celula = models.AutoField(primary_key=True, unique=True)
 	nome      = models.CharField(max_length=100)
 	lider     = models.CharField(max_length=100, default='Mohamed')
-	bairro    = models.CharField(max_length=100, default='BDN Tapuapé')
+	endereco  = models.CharField(max_length=150, default='BDN Tapuapé')
 	contato   = models.CharField(max_length=100, default='s/ contato')
 	def __str__(self):
 		return '%s, Líder: %s' % (self.nome,self.lider)
